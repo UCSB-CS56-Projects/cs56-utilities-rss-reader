@@ -87,6 +87,8 @@ public class CommaFeed {
 
   /**
    * Returns HttpGet that is preinitialized with the base URL and Accept header
+   * If username or password is null, then Authorization header will not be included
+   * In this case, it is your responsibility to add the API key to the JSON request in order to authenticate with the API
    * @param method the REST GET method to call on the CommaFeed API, should begin with /
    * @param username username to use
    * @param password password to use
@@ -112,6 +114,8 @@ public class CommaFeed {
 
   /**
    * Returns HttpPost that is preinitialized with the base URL and Accept header
+   * If username or password is null, then Authorization header will not be included
+   * In this case, it is your responsibility to add the API key to the JSON request in order to authenticate with the API
    * @param method the REST POST method to call on the CommaFeed API, should begin with /
    * @param username username to use
    * @param password password to use
