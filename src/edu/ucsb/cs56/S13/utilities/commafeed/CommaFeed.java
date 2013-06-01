@@ -16,9 +16,13 @@ public class CommaFeed {
    * Creates a new CommaFeed API wrapper that only has access to
    * the demo content.  To access a user's content, pass the user's
    * username and password as parameters for the constructor.
+   * This is essentially calling <code>CommaFeed("demo", "demo")
+   * </code>.
    * @see #Constructor(String username, String password)
    */
   public CommaFeed() {
+    this.username = null;
+    this.password = null;
   }
 
   /**
@@ -29,6 +33,8 @@ public class CommaFeed {
    * @see #Constructor()
    */
   public CommaFeed(String username, String password) {
+    this.username = null;
+    this.password = null;
   }
 
   /**
@@ -38,6 +44,7 @@ public class CommaFeed {
    * specified during construction.
    */
   public String getUsername() {
+    return null;
   }
 
   /**
@@ -47,6 +54,7 @@ public class CommaFeed {
    * specified during construction.
    */
   public String getPassword() {
+    return null;
   }
 
 }
