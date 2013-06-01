@@ -207,8 +207,8 @@ public class CommaFeed {
       post.addHeader("Authorization", "Basic " + StringUtils.base64Encode(username + ":" + password));
     }
 
-    // the accept header must be set to application/json
-    post.addHeader("Accept", "application/json");
+    // the content-type header must be set to application/json
+    post.addHeader("Content-Type", "application/json");
 
     return post;
   }
