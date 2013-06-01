@@ -18,7 +18,7 @@ public class CommaFeed {
    * username and password as parameters for the constructor.
    * This is essentially calling <code>CommaFeed("demo", "demo")
    * </code>.
-   * @see #Constructor(String username, String password)
+   * @see #CommaFeed(String username, String password)
    */
   public CommaFeed() {
     this.username = null;
@@ -30,7 +30,7 @@ public class CommaFeed {
    * content.
    * @param username the unencoded raw username of the client
    * @param password the unencoded raw password of the client
-   * @see #Constructor()
+   * @see #CommaFeed()
    */
   public CommaFeed(String username, String password) {
     this.username = null;

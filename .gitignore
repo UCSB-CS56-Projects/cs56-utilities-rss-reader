@@ -1,5 +1,6 @@
-# Ignore build files #
+# Ignore build and javadoc files #
 build/
+javadoc/
 *.class
 
 # Package Files #
