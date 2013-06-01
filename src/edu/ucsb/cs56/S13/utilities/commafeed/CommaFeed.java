@@ -1,6 +1,10 @@
 package edu.ucsb.cs56.S13.utilities.commafeed;
 
 import org.apache.http.client.methods.*;
+import org.apache.http.client.*;
+import org.apache.http.impl.client.*;
+import org.apache.http.auth.*;
+import org.apache.http.impl.auth.*;
 
 /**
  * A wrapper for the CommaFeed API in the form of a Java Object.
@@ -47,12 +51,15 @@ public class CommaFeed {
    *
    * @return preinitialized HttpGet
    */
-  private HttpGet getHTTPGet(String method) {
+  private HttpGet getHttpGet(String method) {
     // this is the base url for the api
     String url = API_ROOT + method;
 
     // create the new get request
     HttpGet get = new HttpGet(url);
+
+    // add auth header
+    get.addHeader("Authentication", "Basic " + StringUtils.base64Encode(username + ":" + password));
 
     // the accept header must be set to application/json
     get.addHeader("Accept", "application/json");
@@ -60,24 +67,27 @@ public class CommaFeed {
     return get;
   }
 
-
   /**
    * Returns HttpPost that is preinitialized with the base URL and Accept header
    *
    * @return preinitialized HttpPost
    */
-  private HttpPost getHTTPPost(String method) {
+  private HttpPost getHttpPost(String method) {
     // this is the base url for the api
     String url = API_ROOT + method;
 
     // create the new post request
     HttpPost post = new HttpPost(url);
 
+    // add auth header
+    post.addHeader("Authentication", "Basic " + StringUtils.base64Encode(username + ":" + password));
+
     // the accept header must be set to application/json
     post.addHeader("Accept", "application/json");
 
     return post;
   }
+
 
   /**
    * Retrieves the username given during construction, or null if the
