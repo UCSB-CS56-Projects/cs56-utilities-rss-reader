@@ -49,13 +49,10 @@ public class CommaFeed {
    * @see #CommaFeed()
    */
   public CommaFeed(String username, String password) throws IOException {
-    this.username = username;
-    this.password = password;
-
     HttpClient client = new DefaultHttpClient();
 
     // prepare the request
-    HttpGet profileRequest = getHttpGet("/user/profile");
+    HttpGet profileRequest = getHttpGet("/user/profile", username, password);
 
     // execute request
     HttpResponse response = client.execute(profileRequest);
@@ -70,6 +67,8 @@ public class CommaFeed {
 
     // TODO we should try to use an API key by looking it up
     // or generating one if one does not exist
+    this.username = username;
+    this.password = password;
     this.apiKey = null;
   }
 
@@ -88,17 +87,22 @@ public class CommaFeed {
 
   /**
    * Returns HttpGet that is preinitialized with the base URL and Accept header
+   * @param method the REST GET method to call on the CommaFeed API, should begin with /
+   * @param username username to use
+   * @param password password to use
    * @return preinitialized HttpGet
    */
-  private HttpGet getHttpGet(String method) {
+  private HttpGet getHttpGet(String method, String username, String password) {
     // this is the base url for the api
     String url = API_ROOT + method;
 
     // create the new get request
     HttpGet get = new HttpGet(url);
 
-    // add auth header
-    get.addHeader("Authorization", "Basic " + StringUtils.base64Encode(username + ":" + password));
+    // add auth header if needed
+    if (username != null && password != null) {
+      get.addHeader("Authorization", "Basic " + StringUtils.base64Encode(username + ":" + password));
+    }
 
     // the accept header must be set to application/json
     get.addHeader("Accept", "application/json");
@@ -108,17 +112,22 @@ public class CommaFeed {
 
   /**
    * Returns HttpPost that is preinitialized with the base URL and Accept header
+   * @param method the REST POST method to call on the CommaFeed API, should begin with /
+   * @param username username to use
+   * @param password password to use
    * @return preinitialized HttpPost
    */
-  private HttpPost getHttpPost(String method) {
+  private HttpPost getHttpPost(String method, String username, String password) {
     // this is the base url for the api
     String url = API_ROOT + method;
 
     // create the new post request
     HttpPost post = new HttpPost(url);
 
-    // add auth header
-    post.addHeader("Authorization", "Basic " + StringUtils.base64Encode(username + ":" + password));
+    // add auth header if needed
+    if (username != null && password != null) {
+      post.addHeader("Authorization", "Basic " + StringUtils.base64Encode(username + ":" + password));
+    }
 
     // the accept header must be set to application/json
     post.addHeader("Accept", "application/json");
