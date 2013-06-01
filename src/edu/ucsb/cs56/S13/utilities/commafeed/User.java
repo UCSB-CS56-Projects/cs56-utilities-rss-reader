@@ -1,11 +1,14 @@
 package edu.ucsb.cs56.S13.utilities.commafeed;
 
 import java.io.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class User {
 
   public static Settings parseSettings(String json) throws IOException {
-    return null;
+    ObjectMapper mapper = new ObjectMapper();
+    Settings settings = mapper.readValue(json, Settings.class);
+    return settings;
   }
 
   public static class Settings implements Serializable {
