@@ -24,7 +24,9 @@ public class User {
   }
 
   public static Profile parseProfile(String json) throws IOException {
-    return null;
+    ObjectMapper mapper = new ObjectMapper();
+    Profile profile = mapper.readValue(json, Profile.class);
+    return profile;
   }
 
   public static class Profile implements Serializable {
