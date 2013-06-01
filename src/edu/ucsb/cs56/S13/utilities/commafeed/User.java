@@ -16,11 +16,24 @@ public class User {
     public String readingMode;
     public String readingOrder;
     public String viewMode;
-    public Boolean showRead;
-    public Boolean socialButtons;
-    public Boolean scrollMarks;
+    public boolean showRead;
+    public boolean socialButtons;
+    public boolean scrollMarks;
     public String theme;
     public Object customCss;
   }
 
+  public static Profile parseProfile(String json) throws IOException {
+    return null;
+  }
+
+  public static class Profile implements Serializable {
+    public int id;
+    public String name;
+    public String email;
+    public String apiKey;
+    public String password;
+    public boolean enabled;
+    public boolean admin;
+  }
 }
