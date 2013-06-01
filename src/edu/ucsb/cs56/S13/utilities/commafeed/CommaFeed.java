@@ -6,6 +6,7 @@ import org.apache.http.client.methods.*;
 import org.apache.http.client.*;
 import org.apache.http.impl.client.*;
 import org.apache.http.*;
+import org.apache.http.entity.*;
 
 /**
  * A wrapper for the CommaFeed API in the form of a Java Object.
@@ -34,9 +35,11 @@ public class CommaFeed {
    * username and password as parameters for the constructor.
    * This is essentially calling <code>CommaFeed("demo", "demo")
    * </code>.
+   * @throws IOException if an IOException error occurs
+   * @throws AuthenticationException when authentication fails due to invalid username/password combination
    * @see #CommaFeed(String username, String password)
    */
-  public CommaFeed() throws IOException {
+  public CommaFeed() throws IOException, AuthenticationException {
     this("demo", "demo");
   }
 
@@ -46,9 +49,18 @@ public class CommaFeed {
    * to the user's content.
    * @param username the unencoded raw username of the client
    * @param password the unencoded raw password of the client
+   * @throws IOException if an IOException error occurs
+   * @throws AuthenticationException when authentication fails due to invalid username/password combination
    * @see #CommaFeed()
    */
-  public CommaFeed(String username, String password) throws IOException {
+  public CommaFeed(String username, String password) throws IOException, AuthenticationException {
+    // if username/password is null or empty, we bail out
+    // authentication should fail immediately
+    if (username == null || password == null ||
+	username.isEmpty() || password.isEmpty()) {
+      throw new AuthenticationException();
+    }
+
     HttpClient client = new DefaultHttpClient();
 
     // prepare the request
@@ -65,20 +77,65 @@ public class CommaFeed {
 	System.out.println(profileResponse);
     }
 
-    // TODO we should try to use an API key by looking it up
-    // or generating one if one does not exist
+    // did we authenticate successfully?
+    if (response.getStatusLine().getStatusCode() != 200) {
+      throw new AuthenticationException();
+    }
+
+    // get the POJO for the profile
+    User.Profile userProfile = User.parseProfile(profileResponse);
+
+    // do we have an apiKey?
+    String apiKey = null;
+    if (userProfile.apiKey != null) {
+      // if we do, great, we can just store username and apiKey
+      apiKey = userProfile.apiKey;
+    } else {
+      // if there isn't one, we can try to generate one
+      String apiKeyRequestJSON = "{\"newApiKey\":true}";
+
+      HttpPost apiKeyRequest = getHttpPost("/user/profile", username, password);
+      apiKeyRequest.setEntity(new StringEntity(apiKeyRequestJSON));
+      response = client.execute(apiKeyRequest);
+
+      // was the api key generation successful?
+      // if it was, response code will be 200
+      // if it's not, we're probably a demo account (or something else is going on)
+      if (response.getStatusLine().getStatusCode() == 200) {
+	// we'll re-execute our profile request to get our API key
+	response = client.execute(profileRequest);
+	profileResponse = getStringFromEntity(response.getEntity());
+
+	userProfile = User.parseProfile(profileResponse);
+
+	if (userProfile.apiKey != null) {
+	  apiKey = userProfile.apiKey;
+	}
+      }
+    }
+
+    // we always store username
     this.username = username;
-    this.password = password;
-    this.apiKey = null;
+
+    // we only store password if we have no API key after all that
+    if (this.apiKey != null) {
+      this.password = password;
+    } else {
+      this.password = null;
+    }
+
+    this.apiKey = apiKey;
   }
 
   /**
    * Creates a new CommaFeed API wrapper that has access to the user's
    * content. Uses the given API key to access the user's content.
    * @param apiKey the raw API key of the client
+   * @throws IOException if an IOException error occurs
+   * @throws AuthenticationException when authentication fails due to invalid username/password combination
    * @see #CommaFeed()
    */
-  public CommaFeed(String apiKey) throws IOException {
+  public CommaFeed(String apiKey) throws IOException, AuthenticationException {
     // TODO get username to verify working API key
     this.username = null;
     this.password = null;
