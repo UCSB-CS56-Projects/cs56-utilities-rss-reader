@@ -135,7 +135,7 @@ public class CommaFeed {
     this.username = username;
 
     // we only store password if we have no API key after all that
-    if (this.apiKey != null) {
+    if (apiKey == null) {
       this.password = password;
     } else {
       this.password = null;
