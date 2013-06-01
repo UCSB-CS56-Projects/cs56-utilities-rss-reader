@@ -73,7 +73,7 @@ public class CommaFeed {
     String profileResponse = getStringFromEntity(response.getEntity());
 
     if (DEBUG) {
-	System.out.println(String.format("CommaFeed(username=%s, password=%s) profile response:", this.username, this.password));
+	System.out.println(String.format("CommaFeed(username=%s, password=%s) profile response:", username, password));
 	System.out.println(profileResponse);
     }
 
@@ -90,8 +90,17 @@ public class CommaFeed {
     if (userProfile.apiKey != null) {
       // if we do, great, we can just store username and apiKey
       apiKey = userProfile.apiKey;
+
+      if (DEBUG) {
+	System.out.println(String.format("Was able to get apiKey=%s", apiKey));
+      }
     } else {
       // if there isn't one, we can try to generate one
+
+      if (DEBUG) {
+	System.out.print("No apiKey found. Attempting to generate one... ");
+      }
+
       String apiKeyRequestJSON = "{\"newApiKey\":true}";
 
       HttpPost apiKeyRequest = getHttpPost("/user/profile", username, password);
@@ -110,6 +119,14 @@ public class CommaFeed {
 
 	if (userProfile.apiKey != null) {
 	  apiKey = userProfile.apiKey;
+
+	  if (DEBUG) {
+	    System.out.println(String.format("SUCCESS! Generated apiKey=%s", apiKey));
+	  }
+	}
+      } else {
+        if (DEBUG) {
+	  System.out.println("FAILURE!");
 	}
       }
     }
