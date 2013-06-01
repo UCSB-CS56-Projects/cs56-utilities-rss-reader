@@ -15,7 +15,7 @@
   <property name="javadocLink" value="http://java.sun.com/javase/7/docs/api/" />
   <path id="project.class.path">
     <pathelement location="build"/>
-    <pathelement location="lib/*"/>
+    <pathelement location="lib/junit-4.8.2.jar"/>
   </path>
 
   <target name="compile" description="compile my code">
