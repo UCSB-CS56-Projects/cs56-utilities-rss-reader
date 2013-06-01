@@ -88,7 +88,6 @@ public class CommaFeed {
     return post;
   }
 
-
   /**
    * Retrieves the username given during construction, or null if the
    * no args constructor was called.
@@ -98,15 +97,4 @@ public class CommaFeed {
   public String getUsername() {
     return null;
   }
-
-  /**
-   * Retrieves the password given during construction, or null if the
-   * no args constructor was called.
-   * @return the raw unencoded password of the client, or null if not
-   * specified during construction.
-   */
-  public String getPassword() {
-    return null;
-  }
-
 }

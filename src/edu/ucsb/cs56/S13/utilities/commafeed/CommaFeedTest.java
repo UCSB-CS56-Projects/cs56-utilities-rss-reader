@@ -30,7 +30,6 @@ public class CommaFeedTest {
     CommaFeed cf = new CommaFeed();
 
     assertEquals("demo", cf.getUsername());
-    assertEquals("demo", cf.getPassword());
   }
 
   @Test
@@ -39,6 +38,5 @@ public class CommaFeedTest {
     CommaFeed cf = new CommaFeed("demo", "demo");
 
     assertEquals("demo", cf.getUsername());
-    assertEquals("demo", cf.getPassword());
   }
 }
