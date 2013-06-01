@@ -17,7 +17,7 @@
     <pathelement location="build"/>
     <pathelement location="lib/junit-4.8.2.jar"/>
     <pathelement location="lib/commons-codec-1.6.jar"/>
-    <pathelement location="lib/commons-logging-1.6.jar"/>
+    <pathelement location="lib/commons-logging-1.1.1.jar"/>
     <pathelement location="lib/fluent-hc-4.2.5.jar"/>
     <pathelement location="lib/httpclient-4.2.5.jar"/>
     <pathelement location="lib/httpclient-cache-4.2.5.jar"/>
@@ -32,6 +32,7 @@
     <mkdir dir="build" />
     <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source"
 	   includeantruntime="false" >
+      <compilerarg value="-Xlint"/>
       <classpath refid="project.class.path" />
     </javac>
   </target>
