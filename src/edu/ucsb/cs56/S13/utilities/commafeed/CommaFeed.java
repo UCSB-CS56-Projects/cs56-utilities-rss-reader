@@ -1,11 +1,16 @@
 package edu.ucsb.cs56.S13.utilities.commafeed;
 
+import org.apache.http.client.methods.*;
+
 /**
  * A wrapper for the CommaFeed API in the form of a Java Object.
  * @author Mark Nguyen
  * @author Daniel Vicory
  */
 public class CommaFeed {
+  /** the base URL for all CommaFeed API requests */
+  public static final String API_ROOT = "https://www.commafeed.com/rest";
+
   /** the raw unencoded username of the client */
   private final String username;
 
@@ -35,6 +40,43 @@ public class CommaFeed {
   public CommaFeed(String username, String password) {
     this.username = null;
     this.password = null;
+  }
+
+  /**
+   * Returns HttpGet that is preinitialized with the base URL and Accept header
+   *
+   * @return preinitialized HttpGet
+   */
+  private HttpGet getHTTPGet(String method) {
+    // this is the base url for the api
+    String url = API_ROOT + method;
+
+    // create the new get request
+    HttpGet get = new HttpGet(url);
+
+    // the accept header must be set to application/json
+    get.addHeader("Accept", "application/json");
+
+    return get;
+  }
+
+
+  /**
+   * Returns HttpPost that is preinitialized with the base URL and Accept header
+   *
+   * @return preinitialized HttpPost
+   */
+  private HttpPost getHTTPPost(String method) {
+    // this is the base url for the api
+    String url = API_ROOT + method;
+
+    // create the new post request
+    HttpPost post = new HttpPost(url);
+
+    // the accept header must be set to application/json
+    post.addHeader("Accept", "application/json");
+
+    return post;
   }
 
   /**
