@@ -23,6 +23,9 @@
     <pathelement location="lib/httpclient-cache-4.2.5.jar"/>
     <pathelement location="lib/httpcore-4.2.4.jar"/>
     <pathelement location="lib/httpmime-4.2.5.jar"/>
+    <pathelement location="lib/jackson-core-2.2.0.jar"/>
+    <pathelement location="lib/jackson-databind-2.2.0.jar"/>
+    <pathelement location="lib/jackson-annotations-2.2.0.jar"/>
   </path>
 
   <target name="compile" description="compile my code">
