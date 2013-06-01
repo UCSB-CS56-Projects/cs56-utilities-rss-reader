@@ -240,6 +240,6 @@ public class CommaFeed {
    * specified during construction.
    */
   public String getUsername() {
-    return null;
+    return this.username;
   }
 }
