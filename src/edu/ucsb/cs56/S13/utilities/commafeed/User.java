@@ -12,6 +12,7 @@ public class User {
   }
 
   public static class Settings implements Serializable {
+    public static final long serialVersionUID = 20130512L;
     public String language;
     public String readingMode;
     public String readingOrder;
@@ -30,6 +31,7 @@ public class User {
   }
 
   public static class Profile implements Serializable {
+    public static final long serialVersionUID = 20130512L;
     public int id;
     public String name;
     public String email;
