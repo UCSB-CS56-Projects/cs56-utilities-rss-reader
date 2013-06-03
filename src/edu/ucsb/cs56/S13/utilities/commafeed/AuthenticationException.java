@@ -6,6 +6,7 @@ package edu.ucsb.cs56.S13.utilities.commafeed;
  * and password combination.
  */
 public class AuthenticationException extends Exception {
+  public static final long serialVersionUID = 20130602L;
   public AuthenticationException() { super(); }
   public AuthenticationException(String message) { super(message); }
   public AuthenticationException(String message, Throwable cause) { super(message, cause); }
