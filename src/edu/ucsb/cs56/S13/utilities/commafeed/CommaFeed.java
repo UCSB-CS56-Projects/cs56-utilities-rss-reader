@@ -15,7 +15,7 @@ import org.apache.http.entity.*;
  */
 public class CommaFeed {
   /** boolean flag to control debug statements */
-  private static final Boolean DEBUG = true;
+  private static final Boolean DEBUG = false;
 
   /** the base URL for all CommaFeed API requests */
   public static final String API_ROOT = "https://www.commafeed.com/rest";
