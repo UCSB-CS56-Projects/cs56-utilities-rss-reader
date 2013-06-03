@@ -1,6 +1,15 @@
+# Ignore build and javadoc files #
+build/
+javadoc/
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+# However, include all jars in the lib dir #
+!lib/*.jar
+
+# Ignore emacs backup files #
+*~
