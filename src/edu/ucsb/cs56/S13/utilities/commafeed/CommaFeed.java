@@ -242,4 +242,14 @@ public class CommaFeed {
   public String getUsername() {
     return this.username;
   }
+    
+    public static void main(String []args) {
+        try {
+            new CommaFeed();
+        } catch (IOException e) {
+            // TODO: Handle
+        } catch (AuthenticationException e) {
+            // TODO: Handle
+        }
+    }
 }

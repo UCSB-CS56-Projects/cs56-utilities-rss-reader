@@ -8,11 +8,15 @@
   <property environment="env"/> <!-- load the environment variables -->
   <property name="webRoot" value="${env.HOME}/public_html/cs56" />
   <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
+  <property name="course" value="cs56" />
+  <property name="quarter" value="13S" />
+  <property name="lib.dir" value="lib"/>
   <property name="projectName" value="commafeed" />
   <property name="packageName" value="edu.ucsb.cs56.S13.utilities.commafeed" />
   <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" />
   <property name="javadocLink" value="http://java.sun.com/javase/7/docs/api/" />
+  <property name="mainClass" value="edu.ucsb.cs56.S13.utilities.commafeed.CommaFeed" />
   <path id="project.class.path">
     <pathelement location="build"/>
     <pathelement location="lib/junit-4.8.2.jar"/>
@@ -65,9 +69,21 @@
     <echo>Javadoc deployed to ${javadocURL}</echo>
   </target>
 
-  <target name="run" depends="compile" description="runs the class ${mainClass}" >
+  <target name="run" depends="compile,jar" description="runs the class ${mainClass}" >
+      <java jar="dist/${course}_${quarter}_${projectName}.jar" classpath="build" fork="true" />
   </target>
 
+<!-- target that create a jar file -->
+<target name="jar" description = "Creates a jar file" depends="compile">
+    <mkdir dir="dist" />
+    <jar destfile="dist/${course}_${quarter}_${projectName}.jar"
+        basedir="build" >
+        <manifest>
+            <attribute name="Main-Class" value="${mainClass}" />
+        </manifest>
+        <zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
+    </jar>
+</target>
 
   <target name="test" depends="compile" description="run junit tests">
 
